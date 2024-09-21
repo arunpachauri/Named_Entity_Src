@@ -1,0 +1,98 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Named Entity Application</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<link href="../static/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+<script>
+    document.onreadystatechange = function () {
+    var state = document.readyState
+    if (state == 'interactive') {
+        document.getElementById('contents').style.visibility="hidden";
+    } else if (state == 'complete') {
+        setTimeout(function(){
+            document.getElementById('interactive');
+            document.getElementById('loading').style.visibility="hidden";
+            document.getElementById('contents').style.visibility="visible";
+        },1000);
+    }
+    }
+</script>
+<style>
+    div#loading {
+        position: fixed;
+        display: block;
+        left: 50%;
+        top: 35%;
+        width: 100%;
+        height: 100%;
+        margin: auto;
+        z-index: 9999;
+        background: url(../static/img/loading_icon.gif) no-repeat;
+        cursor: wait;
+    }
+    /* You can add your own styling here */
+    .ent {
+            padding: 0.25em 0.35em;
+            margin: 0 0.25em;
+            line-height: 1;
+            border-radius: 0.25em;
+            border: 1px solid;
+    }
+    .ent-org { background: #f6ffdf; border-color: #f2e700; }
+    .ent-person { background: #ffdfdf; border-color: #ff6347; }
+    .ent-gpe { background: #d3f9d8; border-color: #28a745; }
+</style>
+<body>
+    <div class="container" id="content">
+        <div id="loading">Loading!!!</div>
+        <p class="p-3"></p>
+        <div class="container col-md-12">
+            <h3 class="text-center">
+                Assignment-2_Problem Statement-4
+            </h3>
+            <h4 class="text-center text-primary">
+                Named Entity Application Demo
+            </h4>
+            <h5 class="text-center p-3 text-success">
+                NLPA Group 53
+            </h5>
+            <h6 class="text-center text-primary">
+                <p class=""></p>ARUN PACHAURI (2022ac05728)</p>
+                <p class=""></p>PRASHANT SRIVASTAVA (2022ac05703)</p>
+                <p class=""></p>ARPITA MURTHY (2022ac05148)</p>
+                <p class=""></p>ANUMEY TIWARI (2022ac05129)</p>
+            </h6>
+        </div>
+        <p class="p-3"></p>
+        <form class="row mx-md-n5" action="{{ url_for('file_upload') }}" onsubmit="$('#loading').show();" method="post" enctype="multipart/form-data">
+            <table id="data" class="table table-striped table-bordered">
+                <tr>
+                    <td width="30%" class="justify-content-center">Upload Input Text File</td>
+                    <td>
+                        <div class="d-flex">
+                            <div class="d-inline-block col-4"> <input type="file" required class="form-control" name="customFile" id="customFile" /> </div>
+                            &nbsp;&nbsp;
+                            <div class="d-inline-block col-4"> <button class="btn btn-primary" type="submit" class="btn btn-sm btn-primary">Submit</button> </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="30%" class="justify-content-center">File contents are (Named Entities)</td>
+                    <td class="table table-dark">
+                        {{ content  | safe }}
+                    </td>
+                </tr>
+                <tr>
+                    <td width="30%" class="justify-content-center"></td>
+                    <td>
+                        <a class="btn btn-success" href="{{ url_for('downloadFile') }}"><i class="fa fa-download"></i> Download File</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>  
+</body>
+</html>
